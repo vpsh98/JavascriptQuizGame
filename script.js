@@ -20,7 +20,7 @@ nextButton.addEventListener('click', () => {
 function startGame() {
 	correctAnswers = 0;
 	startButton.classList.add('hide');
-	shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+	shuffledQuestions = questions.sort(() => Math.random() - 0.5);//sorts a question based on the no.(+ve or -ve)
 	currentQuestionIndex = 0 ;
 	questionContainerElement.classList.remove('hide');
 	setNextQuestion()
@@ -32,13 +32,13 @@ function setNextQuestion() {
 } 
 
 function showQuestion(question) {
-	questionElement.innerText = question.question;
-	question.answers.forEach( answer => {
-		const button = document.createElement('button');
-		button.innerText = answer.text;
-		button.classList.add('btn');
+	questionElement.innerText = question.question; // shows a random ques. 
+	question.answers.forEach( answer => {  
+		const button = document.createElement('button');//create a button for each answer 
+		button.innerText = answer.text; //populate the answer feild
+		button.classList.add('btn'); 
 		if(answer.correct){
-			button.dataset.correct = answer.correct; 
+			button.dataset.correct = answer.correct; // adds a property to the button if it is correct
 		}
 		button.addEventListener('click', selectAnswer);
 		answerButtonsElement.appendChild(button);
@@ -46,7 +46,7 @@ function showQuestion(question) {
 }
 
 function resetState() {
-	clearStatusClass(document.body);
+	clearStatusClass(document.body); // clear status class of the body 
 	nextButton.classList.add('hide');
 	hits.classList.add('hide');
 	while(answerButtonsElement.firstChild){
@@ -56,18 +56,18 @@ function resetState() {
 }
 
 function selectAnswer(e) {
-	const selectedButton = e.target; // returns the element (button) on which the event (click) occured
-	const correct = selectedButton.dataset.correct;
+	const selectedButton = e.target;  // returns the element (button) on which the event (click) occured
+	const correct = selectedButton.dataset.correct; // stores the value (T/F) of key 'correct'
 	if(correct){
 		correctAnswers++;
 	}
-	setStatusClass(document.body, correct);
-	Array.from(answerButtonsElement.children).forEach(button =>{
-		setStatusClass(button, button.dataset.correct);
+	setStatusClass(document.body, correct); //set status class for body element
+	Array.from(answerButtonsElement.children).forEach(button =>{ //form an array of answer buttons
+		setStatusClass(button, button.dataset.correct); //set status class for each button
 	})
 	nextButton.classList.remove('hide');
 	
-	if(shuffledQuestions.length > currentQuestionIndex +1)
+	if(shuffledQuestions.length > currentQuestionIndex +1)//show next button if there are more ques.
 	{
 		nextButton.classList.remove('hide');
 	}
